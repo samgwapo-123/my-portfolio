@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Psalm Elly Racaza — Software Developer & CS Student</title>
+  <meta name="description" content="BS Computer Science student at Cebu Institute of Technology – University. Building full-stack web, mobile, and desktop systems solving real-world civic, health, and operational challenges.">
+  <meta name="author" content="Psalm Elly Racaza">
+  <meta property="og:title" content="Psalm Elly Racaza — Portfolio">
+  <meta property="og:description" content="Full-stack engineer building civic tech, small-business tooling, and high-reliability software.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0d9488">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230d9488'/%3E%3Ctext x='32' y='42' font-size='28' text-anchor='middle' fill='%23ffffff' font-family='ui-monospace, monospace' font-weight='800'%3EPR%3C/text%3E%3C/svg%3E">
+
+  <!-- Anti-FOUC Theme Sniffer -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('theme-preference');
+        const prefDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+      
+      /* Light Theme (Engineering Editorial Canvas) */
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-focus: #0d9488;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+      
+      --primary: #0d9488;
+      --primary-hover: #0f766e;
+      --primary-subtle: #ccfbf1;
+      --primary-contrast: #ffffff;
+      
+      --accent: #d97706;
+      --accent-subtle: #fef3c7;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+      --shadow-modal: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      
+      --max-width: 1080px;
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-subtle: #1a2234;
+      --border: #243048;
+      --border-focus: #14b8a6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --primary: #14b8a6;
+      --primary-hover: #2dd4bf;
+      --primary-subtle: rgba(20, 184, 166, 0.15);
+      --primary-contrast: #042f2e;
+      
+      --accent: #f59e0b;
+      --accent-subtle: rgba(245, 158, 11, 0.15);
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+      --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    /* ==========================================================================
+       GLOBAL BASE & ACCESSIBILITY
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    button, input, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: var(--primary-contrast);
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      z-index: 9999;
+      transition: top 0.2s ease;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    /* ==========================================================================
+       NAVIGATION & HEADER
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.25s ease;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.925rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      background: var(--surface-subtle);
+      border-color: var(--text-dim);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       BUTTONS & CHIPS
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.925rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background: var(--surface-subtle);
+      border-color: var(--text-dim);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-contrast);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+      color: var(--primary-contrast);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 35%, transparent);
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+    }
+
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      padding: 5.5rem 0 4rem;
+    }
+
+    .hero-content {
+      max-width: 820px;
+    }
+
+    .hero-pretitle {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 700px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+    }
+
+    .metric-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ==========================================================================
+       SECTION HEADERS
+       ========================================================================== */
+    .section-wrap {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 2.75rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-top: 0.5rem;
+      max-width: 650px;
+    }
+
+    /* ==========================================================================
+       ABOUT & PHILOSOPHY
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      margin-bottom: 1.25rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .about-text strong {
+      color: var(--text);
+    }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .manifesto-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .manifesto-item {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.925rem;
+    }
+
+    .manifesto-bullet {
+      color: var(--primary);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       PROJECTS SECTION & CARDS
+       ========================================================================== */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--text-dim);
+      color: var(--text);
+    }
+
+    .filter-btn[aria-pressed="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-contrast);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+    }
+
+    .project-meta-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-badge {
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.925rem;
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+
+    .project-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      margin-top: auto;
+    }
+
+    .deep-dive-btn {
+      margin-right: auto;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .deep-dive-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Archive list */
+    .secondary-builds {
+      margin-top: 2.5rem;
+      padding: 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+
+    .secondary-builds-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .secondary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .secondary-item {
+      padding: 0.75rem 1rem;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+    }
+
+    .secondary-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .secondary-item span {
+      color: var(--text-muted);
+      font-size: 0.825rem;
+    }
+
+    /* ==========================================================================
+       TECHNICAL SKILLS SECTION
+       ========================================================================== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+    }
+
+    .skill-category {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .skill-list li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-list li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      background: var(--border-focus);
+      border-radius: 50%;
+    }
+
+    /* ==========================================================================
+       EXPERIENCE & LEADERSHIP TIMELINE
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      list-style: none;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      left: 7px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.25rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -2rem;
+      top: 0.35rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 3px solid var(--primary);
+    }
+
+    .timeline-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-role {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .timeline-org {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      color: var(--text-muted);
+      font-size: 0.925rem;
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       EDUCATION, CERTIFICATIONS, ACHIEVEMENTS
+       ========================================================================== */
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .credential-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+    }
+
+    .credential-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .credential-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .credential-item strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .credential-item span {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ==========================================================================
+       CONTACT & OUTREACH
+       ========================================================================== */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-method {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .contact-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+    }
+
+    .contact-val {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-val a:hover {
+      color: var(--primary);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+    }
+
+    /* Anti-spam honeypot */
+    .ohnohoney {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 0;
+      width: 0;
+      z-index: -1;
+    }
+
+    .form-status {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .form-status.success {
+      display: block;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .form-status.error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #f87171;
+    }
+
+    [data-theme="dark"] .form-status.error {
+      background: rgba(153, 27, 27, 0.2);
+      color: #fca5a5;
+      border-color: #ef4444;
+    }
+
+    /* ==========================================================================
+       MODAL: PROJECT ARCHITECTURE DEEP DIVE
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-dialog {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-modal);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-backdrop.active .modal-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      padding: 1.5rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .modal-close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .modal-close-btn:hover {
+      background: var(--surface-subtle);
+      color: var(--text);
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+    }
+
+    .modal-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-label {
+      font-family: var(--font-mono);
+      font-size: 0.775rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-body p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .modal-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .modal-features li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .modal-features li::before {
+      content: "→";
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .modal-footer {
+      padding: 1.25rem 1.75rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       TOAST NOTIFICATION
+       ========================================================================== */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (MEDIA QUERIES)
+       ========================================================================== */
+    @media (max-width: 820px) {
+      .about-grid, .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+        gap: 1.25rem;
+        display: none;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Accessible Skip Navigation Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-inner" aria-label="Main Navigation">
+        <a href="#home" class="brand" aria-label="Psalm Elly Racaza Homepage">
+          <span class="brand-mark">&gt;</span>
+          <span>psalm.racaza</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#skills" class="nav-link">Technical Skills</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#credentials" class="nav-link">Credentials</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Toggle color mode">
+            <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg id="sunIcon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </button>
+          
+          <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-pretitle">
+            <span class="badge-status"><span class="badge-dot"></span> Available for Software Engineering Internships</span>
+            <span class="chip">Cebu City, Philippines</span>
+          </div>
+
+          <h1 class="hero-title">
+            Software engineer building solutions for <span>real communities</span>.
+          </h1>
+
+          <p class="hero-lead">
+            I am a Computer Science student at Cebu Institute of Technology – University. I specialize in full-stack web and mobile development, focusing on civic tech, small-business operational tooling, and AI integrations that solve tangible local problems.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              <span>Inspect Projects</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <a href="Psalm_Racaza_Resume.pdf" download class="btn" id="resumeBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <span>Download Resume</span>
+            </a>
+            <button class="btn" id="copyEmailHero" data-email="samsambelly123@gmail.com" title="Copy email address to clipboard">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>Copy Email</span>
+            </button>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-item">
+              <span class="metric-label">Institution</span>
+              <span class="metric-value">CIT-U (BSCS, Class 2028)</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Recognition</span>
+              <span class="metric-value">Finalist, Cebu SolutionsFest</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Primary Stack</span>
+              <span class="metric-value">React, Next.js, Supabase, AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section-wrap" id="about">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">01 // Engineering Philosophy</div>
+          <h2 class="section-title">Bridging community gaps with engineered systems</h2>
+          <p class="section-subtitle">Why I write code and how I approach real-world software architecture.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              I believe software development in developing economies should prioritize utility over vanity. As a Computer Science student at <strong>Cebu Institute of Technology – University</strong>, I have focused my development time on addressing everyday frictions around me: prescription transparency, informal small-business credit management, and urban commuter mobility.
+            </p>
+            <p>
+              Rather than building cookie-cutter clones of popular apps, my proudest engineering project to date is <strong>MiTinda</strong>—an offline-first PWA created specifically for my mother’s neighborhood <em>karenderya</em> (eatery). It solved real cashflow and inventory leakages through intuitive touch-first UX and localized ledger mechanisms.
+            </p>
+            <p>
+              My core technical foundation spans modern reactive frontend frameworks (React, Next.js), typed mobile development (React Native/Expo), structured relational storage (PostgreSQL, MySQL, SQLite), and practical AI systems (Gemini API, RAG search with <code>pgvector</code>, and local OCR engines).
+            </p>
+          </div>
+
+          <div class="about-card">
+            <h3>How I Build</h3>
+            <ul class="manifesto-list">
+              <li class="manifesto-item">
+                <span class="manifesto-bullet">01</span>
+                <div><strong>Context First:</strong> Software must function under real constraints—intermittent connectivity, uncalibrated devices, and non-technical end users.</div>
+              </li>
+              <li class="manifesto-item">
+                <span class="manifesto-bullet">02</span>
+                <div><strong>Honest Architecture:</strong> I don’t sprinkle microservices or complex architectures where a cleanly typed monolith or SQLite database solves the actual problem.</div>
+              </li>
+              <li class="manifesto-item">
+                <span class="manifesto-bullet">03</span>
+                <div><strong>Ownership:</strong> From schema migration to UI micro-interactions and end-user testing, I take direct responsibility for every layer I ship.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section-wrap" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">02 // Production & Research Builds</div>
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">Real systems, hackathon finalists, and deployed operational software.</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-bar" id="projectFilterBar" role="group" aria-label="Filter projects by technology stack">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projectsContainer">
+          <!-- Project Cards Injected via JavaScript -->
+        </div>
+
+        <!-- Secondary Projects / Academic Builds -->
+        <div class="secondary-builds">
+          <div class="secondary-builds-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            <span>Additional Academic & Exploratory Implementations</span>
+          </div>
+          <ul class="secondary-grid">
+            <li class="secondary-item">
+              <strong>MediFind (Mobile)</strong>
+              <span>Kotlin & Android Studio MVP for emergency hospital discovery using MVC architecture.</span>
+            </li>
+            <li class="secondary-item">
+              <strong>Flood Alert Engine</strong>
+              <span>C# system implementing fuzzy-logic classification for neighborhood water level telemetry.</span>
+            </li>
+            <li class="secondary-item">
+              <strong>University Helpdesk</strong>
+              <span>PHP and MySQL ticket escalation portal with granular role-based access control (RBAC).</span>
+            </li>
+            <li class="secondary-item">
+              <strong>GroupFlow Tracker</strong>
+              <span>Blazor WebAssembly and Tailwind CSS reactive sprint board for student development squads.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section-wrap" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">03 // Technical Tooling</div>
+          <h2 class="section-title">Verified Competencies</h2>
+          <p class="section-subtitle">Categorized by hands-on engineering experience without subjective percentage meters.</p>
+        </div>
+
+        <div class="skills-grid" id="skillsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience & Leadership Section -->
+    <section class="section-wrap" id="experience">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">04 // Trajectory & Responsibility</div>
+          <h2 class="section-title">Work, Leadership & Operations</h2>
+          <p class="section-subtitle">Real accountability across client services, entrepreneurship, and academic leadership.</p>
+        </div>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-header">
+              <span class="timeline-role">Co-Founder & Technical Lead</span>
+              <span class="timeline-badge">Entrepreneurship & Systems</span>
+            </div>
+            <div class="timeline-org">emPress Photobooth • Student Venture</div>
+            <p class="timeline-desc">
+              Engineered software pipelines powering live hardware photobooth kiosks (touch interface, local camera tethering, thermal printing, and dynamic QR code generation for Cloudflare R2 uploads). Concurrently built and maintained <em>EmpressLedger</em> to log event sales, rental inventory, and operator profit-sharing.
+            </p>
+          </li>
+
+          <li class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-header">
+              <span class="timeline-role">Freelance Ticket Sales Auditor</span>
+              <span class="timeline-badge">Contract Work</span>
+            </div>
+            <div class="timeline-org">901 Studios PH / Solar Studios Inc. • Sep 2024 – Dec 2025</div>
+            <p class="timeline-desc">
+              Audited cinema ticket receipts and verified admission registers across multiple Cebu locations. Aggregated daily gross reconciliations, tracked seat variance logs, and delivered timely financial summaries directly to commercial distributors.
+            </p>
+          </li>
+
+          <li class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-header">
+              <span class="timeline-role">Data Records Associate</span>
+              <span class="timeline-badge">Work Experience</span>
+            </div>
+            <div class="timeline-org">ALBASA Cebu • Summer 2025 & Summer 2026</div>
+            <p class="timeline-desc">
+              Managed systematic data ingestion, batch reconciliation, and digitizing records for institutional archives using Microsoft Excel, maintaining 100% record integrity across two consecutive contract terms.
+            </p>
+          </li>
+
+          <li class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-header">
+              <span class="timeline-role">Student Executive Officer</span>
+              <span class="timeline-badge">Student Leadership</span>
+            </div>
+            <div class="timeline-org">College of Computer Studies Society, CIT-U</div>
+            <p class="timeline-desc">
+              Coordinated technical workshops, departmental coding events, and official communication channels for undergraduate computer science and IT majors.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Credentials & Education -->
+    <section class="section-wrap" id="credentials">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">05 // Academic Record & Verifications</div>
+          <h2 class="section-title">Education & Credentials</h2>
+          <p class="section-subtitle">Verified coursework, standardized assessments, and competitive hackathons.</p>
+        </div>
+
+        <div class="credentials-grid">
+          <div class="credential-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              <span>Degree Program</span>
+            </h3>
+            <div class="credential-item">
+              <strong>BS in Computer Science</strong>
+              <span>Cebu Institute of Technology – University, Cebu City</span>
+              <span>Expected Graduation: 2028</span>
+              <span style="margin-top: 0.5rem; color: var(--text);">Focus: Object-Oriented Software Engineering, Data Structures & Algorithms, Distributed Systems.</span>
+            </div>
+          </div>
+
+          <div class="credential-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Certifications</span>
+            </h3>
+            <ul class="credential-list">
+              <li class="credential-item">
+                <strong>CodeChum Java OOP Standard Certification</strong>
+                <span>Score: 94.0% • Issued May 28, 2026</span>
+                <span>Rigorous evaluation covering inheritance, polymorphism, encapsulation, and interfaces.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="credential-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+              <span>Competitions</span>
+            </h3>
+            <ul class="credential-list">
+              <li class="credential-item">
+                <strong>Finalist — Cebu SolutionsFest 2026</strong>
+                <span>Project GeneRX: Selected among top civic prototypes tackling healthcare accessibility.</span>
+              </li>
+              <li class="credential-item">
+                <strong>Can You HackIT Cebu 2026</strong>
+                <span>Certificate of Participation • Issued Aug 25, 2026</span>
+                <span>IBPAP Civic Mobility and Urban Transit Hackathon.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Outreach -->
+    <section class="section-wrap" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">06 // Direct Channel</div>
+          <h2 class="section-title">Get in Touch</h2>
+          <p class="section-subtitle">I respond quickly to internship inquiries, software engineering roles, and civic-tech collaborations.</p>
+        </div>
+
+        <div class="contact-layout">
+          <!-- Functional Form with Fallback -->
+          <div class="contact-card">
+            <div>
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Send a Direct Message</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">
+                Submissions automatically forward directly to my inbox with validation and anti-spam protection.
+              </p>
+            </div>
+
+            <form id="contactForm" novalidate>
+              <!-- Anti-Spam Honeypot Field -->
+              <input type="text" name="_gotcha" class="ohnohoney" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+              <div class="form-group">
+                <label for="userName">Your Name <span style="color:var(--accent);">*</span></label>
+                <input type="text" id="userName" name="name" class="form-control" placeholder="e.g. Elena Rostova" required>
+              </div>
+
+              <div class="form-group">
+                <label for="userEmail">Email Address <span style="color:var(--accent);">*</span></label>
+                <input type="email" id="userEmail" name="email" class="form-control" placeholder="elena@company.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="userSubject">Subject</label>
+                <input type="text" id="userSubject" name="subject" class="form-control" placeholder="Internship Inquiry / Project Collaboration">
+              </div>
+
+              <div class="form-group">
+                <label for="userMessage">Message <span style="color:var(--accent);">*</span></label>
+                <textarea id="userMessage" name="message" class="form-control" rows="4" placeholder="Detail your project timeline, role specifications, or questions..." minlength="15" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
+                <span>Transmit Message</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+
+              <div id="formStatus" class="form-status" role="alert"></div>
+            </form>
+          </div>
+
+          <!-- Direct Contacts -->
+          <div class="contact-card" style="justify-content: center;">
+            <div class="contact-method">
+              <span class="contact-label">Direct Email</span>
+              <div class="contact-val">
+                <a href="mailto:samsambelly123@gmail.com">samsambelly123@gmail.com</a>
+                <button class="btn btn-sm" id="copyEmailContact" data-email="samsambelly123@gmail.com" title="Copy email">Copy</button>
+              </div>
+            </div>
+
+            <div class="contact-method">
+              <span class="contact-label">Developer Profile</span>
+              <div class="contact-val">
+                <a href="https://github.com/samgwapo-123" target="_blank" rel="noopener noreferrer">github.com/samgwapo-123 ↗</a>
+              </div>
+            </div>
+
+            <div class="contact-method">
+              <span class="contact-label">Professional Network</span>
+              <div class="contact-val">
+                <a href="https://www.linkedin.com/in/psalm-racaza-46364b404/" target="_blank" rel="noopener noreferrer">linkedin.com/in/psalm-racaza ↗</a>
+              </div>
+            </div>
+
+            <div class="contact-method">
+              <span class="contact-label">Geographic Location</span>
+              <div class="contact-val">
+                <span>Cebu City, Central Visayas, Philippines (UTC+8)</span>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 0.5rem;">
+              <span class="contact-label">Resume Document</span>
+              <div style="margin-top: 0.5rem;">
+                <a href="Psalm_Racaza_Resume.pdf" download class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                  <span>Download Complete Resume (PDF)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Project Architecture Modal -->
+  <div class="modal-backdrop" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Project Title</h3>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close project modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <!-- Actions Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div class="toast" id="toastNotification" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Action completed successfully</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <strong>Psalm Elly Racaza</strong> — BS Computer Science Student
+          <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.2rem;">
+            Built with semantic HTML5, modern CSS tokens & vanilla JavaScript. Zero framework bloat.
+          </div>
+        </div>
+
+        <ul class="footer-links">
+          <li><a href="#home">Back to Top ↑</a></li>
+          <li><a href="https://github.com/samgwapo-123" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/psalm-racaza-46364b404/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       PRODUCTION APPLICATION SCRIPT
+       ========================================================================== -->
+  <script>
+    /**
+     * PORTFOLIO DATA CONFIGURATION
+     * To plug in Web3Forms or Formspree: set FORMSPREE_ENDPOINT to your unique URL.
+     * When left blank, the form automatically falls back to an engineered mailto: trigger.
+     */
+    const CONFIG = {
+      email: "samsambelly123@gmail.com",
+      formEndpoint: "" // e.g., "https://api.web3forms.com/submit" or "https://formspree.io/f/xyz"
+    };
+
+    const PROJECTS = [
+      {
+        id: "generx",
+        title: "GeneRX: AI Generic Medicine Finder",
+        role: "Lead Architect & Mobile Developer",
+        category: "Mobile",
+        tags: ["React Native", "Expo", "Supabase", "pgvector", "Gemini", "OCR"],
+        highlight: "Finalist — Cebu SolutionsFest 2026",
+        shortDesc: "A civic healthcare application that matches branded prescriptions with affordable, chemically equivalent generic medicines certified by the Philippine Food and Drug Administration (FDA).",
+        problem: "In the Philippines, vulnerable patients routinely overpay for branded medications or abandon prescriptions because pharmacies rarely provide transparent visibility into generic equivalents that cost up to 70% less.",
+        myWork: "Designed the end-to-end prototype: implemented prescription camera capture with client-side OCR parsing, built a fuzzy-matching lookup pipeline against DOH/FDA medicine datasets, integrated Gemini API for multi-lingual medical context, and configured Supabase pgvector for semantic drug substitution matching.",
+        features: [
+          "Prescription image scanning with local OCR parsing (Tesseract.js).",
+          "Semantic vector matching for complex chemical compounds using Supabase pgvector.",
+          "Trilingual accessibility UI (Cebuano, Filipino, English) ensuring non-technical accessibility.",
+          "Offline cache of essential local life-saving generic equivalents."
+        ],
+        github: null,
+        live: null
+      },
+      {
+        id: "mitinda",
+        title: "MiTinda: Karenderya Operations PWA",
+        role: "Solo Creator & Full-Stack Developer",
+        category: "Full-Stack",
+        tags: ["React 19", "Vite", "Tailwind CSS", "PWA", "Cloudflare Pages"],
+        highlight: "Production deployment for local family enterprise",
+        shortDesc: "An installable, offline-first Progressive Web App designed specifically for neighborhood eatery management—daily menu pricing, market prep procurement, and customer credit (utang) ledgers.",
+        problem: "Local Philippine food stalls (karenderyas) operate entirely on paper slips and memory. Unrecorded customer credits and inaccurate morning market lists cause substantial cash leakage.",
+        myWork: "Interviewed stall operators to build an interface tailored for quick grease-finger tap targets. Engineered a lightweight local persistence layer that synchronizes when online, and deployed the bundle with continuous delivery on Cloudflare Pages.",
+        features: [
+          "Installable PWA with 100% offline functionality via Service Workers.",
+          "Visual tap-based dish selection and automated raw ingredient quantity calculator.",
+          "IndexedDB credit balance ledger tracking individual customer credit records with audit timestamps.",
+          "Zero operating overhead using free-tier Cloudflare Pages edge delivery."
+        ],
+        github: "https://github.com/samgwapo-123/MiTinda",
+        live: null
+      },
+      {
+        id: "mobility",
+        title: "Civic Jeepney Mobility Platform",
+        role: "Backend & Spatial Data Lead",
+        category: "Data/Backend",
+        tags: ["Next.js", "TypeScript", "Spatial Data", "Algorithms"],
+        highlight: "Can You HackIT Cebu 2026 Entry",
+        shortDesc: "A public transit data platform that analyzes commuter route wait times across Cebu corridors to identify underserved transit segments.",
+        problem: "Municipal planners make route modifications without ground-level telemetry on where Cebuano commuters experience peak vehicle deficits.",
+        myWork: "Engineered synthetic trip generator models simulating peak passenger volume across 6 high-density Cebu corridors. Built spatial gap-detection heuristics that surface under-served segments to city traffic operators.",
+        features: [
+          "Simulated commuter trip generation matching rush-hour volume distributions.",
+          "Corridor deficiency flagging based on vehicle-to-commuter wait ratios.",
+          "Interactive dashboard for transit planners to visualize pinch points."
+        ],
+        github: null,
+        live: null
+      },
+      {
+        id: "empress",
+        title: "emPress Photobooth & EmpressLedger",
+        role: "Co-Founder & Lead Systems Developer",
+        category: "Desktop",
+        tags: ["Electron", "React", "Tauri", "Rust", "SQLite", "Cloudflare R2"],
+        highlight: "Commercial Student Venture Operating at Live Events",
+        shortDesc: "A dual-system event solution: a kiosk touchscreen photobooth with instant thermal printing and dynamic cloud QR sharing, paired with an offline desktop accounting ledger.",
+        problem: "Existing commercial photobooth software licenses are prohibitively expensive and lack integrated inventory-to-revenue reconciliation for small student event enterprises.",
+        myWork: "Engineered the hardware capture-and-print application using Electron/React with real-time camera feeds. Built the EmpressLedger companion app in Tauri and Rust with an encrypted SQLite store for financial tracking.",
+        features: [
+          "Low-latency camera shutter preview, custom event overlay compositing, and thermal print spooling.",
+          "Automated instant upload of photos to Cloudflare R2 with high-speed dynamic QR generation for mobile guest downloads.",
+          "Lightweight desktop accounting software written in Rust for lightning-fast launch and minimal memory consumption."
+        ],
+        github: null,
+        live: null
+      },
+      {
+        id: "classsync",
+        title: "ClassSync: AI Academic Project Manager",
+        role: "Lead Developer • OOP Final Project",
+        category: "Desktop",
+        tags: ["Java", "JavaFX 21", "MySQL", "JDBC", "Gemini API"],
+        highlight: "Academic Capstone (CIT-U OOP 2)",
+        shortDesc: "A JavaFX desktop project management application equipped with database persistence and Gemini-powered commit analysis to assess individual group member contributions.",
+        problem: "In collegiate software projects, instructors struggle to objectively evaluate individual workload splits, leading to unequal contribution distribution.",
+        myWork: "Designed the MVC architecture, normalized relational schemas in MySQL via JDBC, and integrated the Gemini REST API to evaluate submitted milestone reports against git contribution summaries.",
+        features: [
+          "Strict MVC architecture implemented in pure JavaFX without heavyweight runtime dependencies.",
+          "Connection pool management with raw prepared statements preventing SQL injection.",
+          "Gemini API contextual integration delivering contribution grading recommendations to instructors."
+        ],
+        github: null,
+        live: null
+      }
+    ];
+
+    const SKILLS_DATA = [
+      {
+        category: "Core Languages",
+        items: ["Java (OOP, JavaFX)", "JavaScript (ES6+)", "TypeScript", "Python", "C#", "C & C++", "Kotlin", "Rust (Tauri / learning)"]
+      },
+      {
+        category: "Frontend & UI",
+        items: ["React.js", "Next.js", "Tailwind CSS", "Progressive Web Apps (PWA)", "React Native (Expo)", "HTML5 & Semantic Web", "Responsive Architecture"]
+      },
+      {
+        category: "Backend & Systems",
+        items: ["Node.js / Express", "Flask (Python)", "PHP", "RESTful API Architecture", "Supabase Backend-as-a-Service", "Service Workers & Web Workers"]
+      },
+      {
+        category: "Databases & Storage",
+        items: ["PostgreSQL (with pgvector)", "MySQL / Relational Modeling", "SQLite (Local Embedded)", "Cloudflare R2 Object Storage", "IndexedDB Client Cache"]
+      },
+      {
+        category: "AI & Practical Integrations",
+        items: ["Google Gemini API", "Retrieval-Augmented Generation (RAG)", "Vector Embeddings & Search", "Client-Side OCR (Tesseract.js)", "Fuzzy String Matching"]
+      },
+      {
+        category: "Engineering Tools & DevOps",
+        items: ["Git & GitHub Version Control", "Vite & Modern Bundlers", "Cloudflare Pages", "Android Studio", "Linux / CLI Workflows", "Figma UI Prototyping"]
+      }
+    ];
+
+    /* ==========================================================================
+       DOM UTILITIES & HELPERS
+       ========================================================================== */
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function showToast(message) {
+      const toast = $("#toastNotification");
+      const msgEl = $("#toastMsg");
+      msgEl.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3500);
+    }
+
+    function copyToClipboard(text, successLabel = "Copied to clipboard!") {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successLabel);
+      }).catch(() => {
+        showToast("Press Ctrl+C to copy: " + text);
+      });
+    }
+
+    /* ==========================================================================
+       THEME CONTROLLER
+       ========================================================================== */
+    const themeToggleBtn = $("#themeToggle");
+    const sunIcon = $("#sunIcon");
+    const moonIcon = $("#moonIcon");
+
+    function updateThemeUI(theme) {
+      if (theme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        themeToggleBtn.setAttribute("aria-label", "Switch to light mode");
+        sunIcon.style.display = "block";
+        moonIcon.style.display = "none";
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+        themeToggleBtn.setAttribute("aria-label", "Switch to dark mode");
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "block";
+      }
+    }
+
+    // Initialize toggle state from document attribute set by inline script
+    updateThemeUI(document.documentElement.getAttribute("data-theme") || "light");
+
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      localStorage.setItem("theme-preference", next);
+      updateThemeUI(next);
+    });
+
+    /* ==========================================================================
+       MOBILE NAVIGATION DRAWER
+       ========================================================================== */
+    const mobileMenuBtn = $("#mobileMenuBtn");
+    const navLinks = $("#navLinks");
+
+    mobileMenuBtn.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      mobileMenuBtn.setAttribute("aria-expanded", isOpen);
+    });
+
+    // Close mobile nav when clicking a link
+    navLinks.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        navLinks.classList.remove("open");
+        mobileMenuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    /* ==========================================================================
+       RENDER SKILLS
+       ========================================================================== */
+    const skillsGrid = $("#skillsGrid");
+    skillsGrid.innerHTML = SKILLS_DATA.map(group => `
+      <div class="skill-card">
+        <h3 class="skill-category">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>${escapeHtml(group.category)}</span>
+        </h3>
+        <ul class="skill-list">
+          ${group.items.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+      </div>
+    `).join("");
+
+    /* ==========================================================================
+       PROJECTS RENDERING & FILTERING
+       ========================================================================== */
+    const projectsContainer = $("#projectsContainer");
+    const filterBar = $("#projectFilterBar");
+
+    // Gather distinct categories
+    const categories = ["All", ...new Set(PROJECTS.map(p => p.category))];
+
+    function renderFilterButtons(activeCategory) {
+      filterBar.innerHTML = categories.map(cat => `
+        <button class="filter-btn" 
+          aria-pressed="${cat === activeCategory}" 
+          data-category="${escapeHtml(cat)}">
+          ${escapeHtml(cat)}
+        </button>
+      `).join("");
+    }
+
+    function renderProjects(filter = "All") {
+      const filtered = filter === "All" ? PROJECTS : PROJECTS.filter(p => p.category === filter);
+
+      projectsContainer.innerHTML = filtered.map(p => `
+        <article class="project-card" data-project-id="${p.id}">
+          <div class="project-meta-top">
+            <span class="project-badge">${escapeHtml(p.highlight || p.category)}</span>
+            <span class="chip">${escapeHtml(p.category)}</span>
+          </div>
+          <h3 class="project-title">${escapeHtml(p.title)}</h3>
+          <p class="project-desc">${escapeHtml(p.shortDesc)}</p>
+          
+          <ul class="project-stack">
+            ${p.tags.map(t => `<li class="chip">${escapeHtml(t)}</li>`).join("")}
+          </ul>
+
+          <div class="project-actions">
+            <button class="deep-dive-btn" data-action="inspect" data-id="${p.id}">
+              <span>Inspect Architecture</span>
+              <span aria-hidden="true">→</span>
+            </button>
+            ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener noreferrer" class="btn btn-sm" aria-label="View source code on GitHub">Code</a>` : ""}
+            ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" aria-label="Visit live deployment">Live</a>` : ""}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    renderFilterButtons("All");
+    renderProjects("All");
+
+    filterBar.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      const selected = btn.getAttribute("data-category");
+      renderFilterButtons(selected);
+      renderProjects(selected);
+    });
+
+    /* ==========================================================================
+       MODAL CONTROLLER (PROJECT DEEP DIVE)
+       ========================================================================== */
+    const modal = $("#projectModal");
+    const modalTitle = $("#modalTitle");
+    const modalBody = $("#modalBody");
+    const modalFooter = $("#modalFooter");
+    const modalCloseBtn = $("#modalCloseBtn");
+    let lastActiveElement = null;
+
+    function openProjectModal(projectId) {
+      const project = PROJECTS.find(p => p.id === projectId);
+      if (!project) return;
+
+      lastActiveElement = document.activeElement;
+
+      modalTitle.textContent = project.title;
+      modalBody.innerHTML = `
+        <div class="modal-section">
+          <div class="modal-label">Role & Engineering Scope</div>
+          <p><strong>${escapeHtml(project.role)}</strong></p>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-label">The Core Problem</div>
+          <p>${escapeHtml(project.problem)}</p>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-label">My Specific Contribution & Architecture</div>
+          <p>${escapeHtml(project.myWork)}</p>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-label">Key Technical Features</div>
+          <ul class="modal-features">
+            ${project.features.map(f => `<li>${escapeHtml(f)}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-label">Technologies Implemented</div>
+          <div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;">
+            ${project.tags.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join("")}
+          </div>
+        </div>
+      `;
+
+      let actionButtons = `<button class="btn btn-sm" id="modalDismissBtn">Close</button>`;
+      if (project.github) {
+        actionButtons += `<a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-sm">View Repository</a>`;
+      }
+      if (project.live) {
+        actionButtons += `<a href="${project.live}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Open Live App</a>`;
+      }
+      modalFooter.innerHTML = actionButtons;
+
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      modalCloseBtn.focus();
+
+      $("#modalDismissBtn").addEventListener("click", closeProjectModal);
+    }
+
+    function closeProjectModal() {
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      if (lastActiveElement) lastActiveElement.focus();
+    }
+
+    projectsContainer.addEventListener("click", (e) => {
+      const inspectBtn = e.target.closest("[data-action='inspect']");
+      if (inspectBtn) {
+        const id = inspectBtn.getAttribute("data-id");
+        openProjectModal(id);
+      }
+    });
+
+    modalCloseBtn.addEventListener("click", closeProjectModal);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeProjectModal();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("active")) {
+        closeProjectModal();
+      }
+    });
+
+    /* ==========================================================================
+       CLIPBOARD & RESUME ACTIONS
+       ========================================================================== */
+    $("#copyEmailHero").addEventListener("click", function() {
+      copyToClipboard(this.getAttribute("data-email"), "Email copied to clipboard!");
+    });
+
+    $("#copyEmailContact").addEventListener("click", function() {
+      copyToClipboard(this.getAttribute("data-email"), "Email copied to clipboard!");
+    });
+
+    // Provide friendly alert if physical PDF isn't present in testing environment
+    $("#resumeBtn").addEventListener("click", function(e) {
+      showToast("Downloading Psalm_Racaza_Resume.pdf...");
+    });
+
+    /* ==========================================================================
+       FUNCTIONAL CONTACT FORM WITH AUTOMATIC FALLBACK
+       ========================================================================== */
+    const contactForm = $("#contactForm");
+    const formStatus = $("#formStatus");
+    const submitBtn = $("#submitBtn");
+
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      formStatus.className = "form-status";
+      formStatus.style.display = "none";
+
+      const formData = new FormData(contactForm);
+      const honeypot = formData.get("_gotcha");
+      
+      // Bot trapped
+      if (honeypot) {
+        return;
+      }
+
+      const name = formData.get("name")?.toString().trim();
+      const email = formData.get("email")?.toString().trim();
+      const subject = formData.get("subject")?.toString().trim() || "Portfolio Outreach";
+      const message = formData.get("message")?.toString().trim();
+
+      // Client-side validation
+      if (!name || !email || !message) {
+        formStatus.textContent = "Please provide your name, email, and message.";
+        formStatus.classList.add("error");
+        return;
+      }
+
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        formStatus.textContent = "Please enter a valid email address.";
+        formStatus.classList.add("error");
+        return;
+      }
+
+      if (message.length < 15) {
+        formStatus.textContent = "Please write a slightly more detailed message (minimum 15 characters).";
+        formStatus.classList.add("error");
+        return;
+      }
+
+      // If an external endpoint like Formspree or Web3Forms is provided:
+      if (CONFIG.formEndpoint) {
+        submitBtn.disabled = true;
+        submitBtn.querySelector("span").textContent = "Transmitting...";
+
+        try {
+          const response = await fetch(CONFIG.formEndpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({ name, email, subject, message })
+          });
+
+          if (!response.ok) throw new Error("Submission network failure");
+
+          contactForm.reset();
+          formStatus.textContent = "Thank you! Your message has been transmitted successfully.";
+          formStatus.classList.add("success");
+          showToast("Message sent successfully!");
+        } catch (err) {
+          formStatus.textContent = `Direct submission failed. Falling back to email client...`;
+          formStatus.classList.add("error");
+          fallbackToMailto(name, email, subject, message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.querySelector("span").textContent = "Transmit Message";
+        }
+      } else {
+        // Transparent Fallback to mailto link
+        fallbackToMailto(name, email, subject, message);
+        contactForm.reset();
+        formStatus.textContent = "Opening your preferred mail application with this drafted message...";
+        formStatus.classList.add("success");
+      }
+    });
+
+    function fallbackToMailto(name, email, subject, message) {
+      const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+      const mailtoUrl = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
+    }
+  </script>
+</body>
+</html>
