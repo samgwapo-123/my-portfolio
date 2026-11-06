@@ -7,93 +7,119 @@ const CONFIG = {
 // PROJECT DATA
 const PROJECTS = [
   {
-    id: "generx",
-    title: "GeneRX: AI Generic Medicine Finder",
-    category: "Mobile",
-    highlight: "Finalist — Cebu SolutionsFest 2026",
-    role: "Lead Architect & Mobile Developer",
-    tags: ["React Native", "Expo", "Supabase", "pgvector", "Gemini", "OCR"],
-    shortDesc: "A civic healthcare application that matches branded prescriptions with FDA-certified, chemically equivalent generic medicines costing up to 70% less.",
-    problem: "In the Philippines, vulnerable patients routinely overpay for branded medications due to pharmacy information asymmetry and lack of generic awareness.",
-    myWork: "Architected the complete mobile prototype: integrated prescription camera capture with client-side OCR parsing, developed a fuzzy-search lookup against DOH drug catalogs, and configured Supabase pgvector for vector-based chemical equivalence matching.",
+    id: "budget-liquidation",
+    title: "Smart Org Budget & Liquidation System",
+    category: "AI",
+    highlight: "Built for student organizations",
+    shortDesc: "A receipt and budget tracking platform for student organizations, with AI-assisted expense entry and dual-budget safeguards.",
+    problem: "Student organizations can lose paper receipts, spend hours encoding expenses, and run out of budget without warning.",
     features: [
-      "Prescription image scanning with local OCR parsing.",
-      "Semantic vector matching for complex chemical compounds using pgvector.",
-      "Trilingual accessibility (Cebuano, Filipino, English).",
-      "Local cache for essential life-saving generic substitutes."
+      "Members photograph receipts for Gemini to read prices and categorize expenses.",
+      "Recorded totals are locked so the amounts cannot be altered.",
+      "Dual budgets set a safe target alongside a hard maximum to protect contingency funds."
     ],
     github: null,
     live: null
   },
   {
     id: "mitinda",
-    title: "MiTinda: Karenderya Operations PWA",
-    category: "Full-Stack",
-    highlight: "Production deployment for family eatery",
-    role: "Solo Creator & Developer",
+    title: "MiTinda",
+    category: "PWA",
+    highlight: "Built for a real user: my mom",
+    role: "Solo developer",
     tags: ["React 19", "Vite", "Tailwind CSS", "PWA", "Cloudflare Pages"],
-    shortDesc: "An installable, offline-first Progressive Web App designed specifically for neighborhood eateries—daily menus, market prep, and customer credit (utang) ledgers.",
-    problem: "Philippine neighborhood eateries operate on informal memory and paper slips, leading to frequent cash leakages and uncollected customer debt.",
-    myWork: "Designed grease-finger friendly tap targets for touchscreens, engineered offline data persistence using IndexedDB, and set up continuous automated deployments via Cloudflare Pages.",
+    shortDesc: "A web app for my mom's small karenderya to plan the menu, prepare a shopping list, and track customer utang so she can see her budget.",
+    problem: "The karenderya was being run with notes in Messenger.",
+    myWork: "I built MiTinda as an installable, offline-first app for my mom to use.",
     features: [
-      "Installable PWA running 100% offline via Service Workers.",
-      "Tap-based dish selection and morning market preparation calculator.",
-      "IndexedDB customer balance tracker with timestamped debt logs.",
-      "Zero operating expenses using Cloudflare Pages edge delivery."
+      "Three tabs for menu planning, shopping lists, and utang tracking.",
+      "Utang balances, credits, payments, and corrections.",
+      "Installable and offline-first.",
     ],
-    github: "https://github.com/samgwapo-123/MiTinda",
-    live: null
+    live: "https://mich-tinda.pages.dev"
   },
   {
-    id: "mobility",
-    title: "Civic Jeepney Mobility Platform",
-    category: "Data/Backend",
-    highlight: "Can You HackIT Cebu 2026 Entry",
-    role: "Backend & Data Lead",
-    tags: ["Next.js", "TypeScript", "Spatial Data", "Algorithms"],
-    shortDesc: "A public commuter route analytics concept that flags underserved Cebu public transit corridors.",
-    problem: "Municipal planners make route modifications without ground-level telemetry on where Cebuano commuters experience peak vehicle deficits.",
-    myWork: "Engineered synthetic trip generation simulating passenger density across 6 major Cebu corridors and authored gap-detection heuristics flagging underserved routes.",
+    id: "medifinder",
+    title: "MediFinder: AI Emergency Care & First-Aid Locator",
+    category: "Mobile & Web",
+    highlight: "Web and mobile app",
+    role: "Full-stack developer and AI engineer",
+    tags: ["React Native (Expo)", "TypeScript", "Supabase", "PostgreSQL", "Google Gemini API", "Native geolocation"],
+    shortDesc: "An emergency first-aid and hospital locator built to address delays during medical emergencies.",
+    problem: "Delays during medical emergencies.",
+    myWork: "Built a first-aid chatbot grounded in a database of protocols. It uses a person's Medical ID details in the prompt and locates nearby hospitals.",
     features: [
-      "Peak-hour commuter passenger volume modeling.",
-      "Corridor deficiency flagging based on vehicle-to-commuter wait ratios.",
-      "Interactive dashboard for transit planners to visualize pinch points."
+      "RAG first-aid chatbot grounded in protocols for bleeding, fainting, choking, and other first aid; grounding helps reduce hallucinations.",
+      "Medical ID details (blood type, allergies, age) are added to the AI prompt for personalized advice.",
+      "Distance and estimated travel time to 17+ local hospitals, calculated with the Haversine formula.",
+      "Hands off to the phone's maps app for voice navigation, without paid map APIs.",
+      "Supabase Row-Level Security protects patient data; database triggers create user profiles automatically.",
+      "Runs on web and mobile."
     ],
     github: null,
     live: null
   },
   {
-    id: "empress",
-    title: "emPress Photobooth & EmpressLedger",
-    category: "Desktop",
-    highlight: "Student Business Operating at Live Events",
-    role: "Co-Founder & Systems Lead",
-    tags: ["Electron", "React", "Tauri", "Rust", "SQLite", "Cloudflare R2"],
-    shortDesc: "A dual hardware-software ecosystem: a touchscreen event photobooth with thermal printing and cloud QR photo sharing, paired with a lightweight desktop accounting ledger.",
-    problem: "Commercial photobooth software is prohibitively expensive and lacks integrated inventory-to-revenue tracking for small event businesses.",
-    myWork: "Engineered the camera capture, print spooling, and real-time Cloudflare R2 upload pipelines in Electron/React. Developed EmpressLedger in Tauri & Rust for event financial tracking.",
+    id: "generx",
+    title: "GeneRX (Prototype)",
+    category: "Mobile",
+    highlight: "Cebu SolutionsFest 2026 finalist",
+    role: "Backend and database",
+    tags: ["React Native", "Expo", "Supabase", "pgvector", "Gemini", "Tesseract.js", "Fuse.js"],
+    shortDesc: "A medicine-finder prototype focused on helping people find affordable generic medicines.",
+    problem: "Finding affordable generic medicines.",
+    myWork: "Contributed backend and database work to the GeneRX prototype.",
     features: [
-      "Camera tethering, custom frame compositing, and thermal print spooling.",
-      "Cloudflare R2 image upload with instant mobile guest QR downloads.",
-      "Native Rust desktop accounting ledger running with minimal RAM footprint."
+      "Prescription OCR using Tesseract.js.",
+      "RAG search using Supabase and pgvector.",
+      "Cebuano, Filipino, and English support."
+    ],
+    github: null,
+    live: null
+  },
+  {
+    id: "mobility",
+    title: "Crowdsourced Jeepney Mobility Platform (IBPAP HackIT)",
+    category: "Data/Backend",
+    highlight: "IBPAP HackIT",
+    role: "Backend and data lead",
+    tags: ["Next.js"],
+    shortDesc: "A crowdsourced jeepney mobility project with commuter trip logging and a planner dashboard.",
+    myWork: "The backend was built with Claude's assistance.",
+    features: [
+      "Commuter trip logging.",
+      "Planner dashboard.",
+      "Gap detection on simulated data for six Cebu corridors."
     ],
     github: null,
     live: null
   },
   {
     id: "classsync",
-    title: "ClassSync: AI Academic Project Manager",
-    category: "Desktop",
-    highlight: "CIT-U OOP 2 Finals Project",
-    role: "Lead Developer",
+    title: "ClassSync (OOP 2 Finals, Team Project)",
+    category: "Academic",
+    highlight: "CIT-U OOP 2 finals project",
+    role: "Front end",
     tags: ["Java", "JavaFX 21", "MySQL", "JDBC", "Gemini API"],
-    shortDesc: "A desktop project management system with database persistence and Gemini-assisted commit evaluations for objective group grading.",
-    problem: "In collegiate software teams, instructors struggle to evaluate individual contributions fairly, leading to free-riding.",
-    myWork: "Implemented a pure MVC architecture in JavaFX, structured relational schemas in MySQL via JDBC, and connected Gemini API to evaluate submitted milestone reports against git logs.",
+    shortDesc: "A team project for group project management and AI-assisted grading.",
+    features: ["Group project management.", "AI-assisted grading."],
+    github: null,
+    live: null
+  },
+  {
+    id: "empress",
+    title: "emPress Photobooth (Student Business)",
+    category: "Business",
+    highlight: "Used at university Welcoming Week and an outside event",
+    role: "Co-founder and outreach manager",
+    tags: ["Electron", "React", "Flask", "Cloudflare R2", "Printing", "QR sharing", "EmpressLedger"],
+    shortDesc: "A student photobooth business with a team-built system for printing and QR sharing, plus the EmpressLedger finance tracker.",
+    myWork: "As co-founder and outreach manager, I bring the booth to events. The software system was built by the team.",
     features: [
-      "Strict MVC architecture in JavaFX without heavy runtime overhead.",
-      "Safe prepared statement transactions preventing SQL injection.",
-      "Gemini API analysis generating objective contribution grading recommendations."
+      "Team-built system using Electron, React, and Flask.",
+      "Cloudflare R2, printing, and QR sharing.",
+      "EmpressLedger finance tracker.",
+      "Used at a university Welcoming Week event and an outside event."
     ],
     github: null,
     live: null
@@ -104,19 +130,27 @@ const PROJECTS = [
 const SKILLS_DATA = [
   {
     category: "Languages",
-    items: ["Java (OOP, JavaFX)", "JavaScript (ES6+)", "TypeScript", "Python", "C & C++", "C#", "Kotlin", "Rust (Learning/Tauri)"]
+    items: ["JavaScript", "TypeScript", "Python", "Java", "C", "C#", "C++", "HTML/CSS"]
   },
   {
     category: "Frontend & UI",
-    items: ["React.js", "Next.js", "Tailwind CSS", "Progressive Web Apps (PWA)", "React Native (Expo)", "Semantic HTML5 & Accessible CSS"]
+    items: ["React", "Next.js", "Tailwind CSS", "PWAs", "React Native (Expo)", "Blazor"]
   },
   {
     category: "Backend & Cloud",
-    items: ["Node.js / Express", "Python (Flask)", "PHP", "Supabase BaaS", "Cloudflare Pages & R2 Storage", "RESTful API Design"]
+    items: ["Python/Flask", "PHP", "REST API integration", "Supabase (Auth, Row-Level Security, triggers)"]
   },
   {
     category: "Databases & AI",
-    items: ["PostgreSQL (pgvector)", "MySQL Relational Schemas", "SQLite Embedded", "Gemini API", "Retrieval-Augmented Generation (RAG)", "Client-Side OCR"]
+    items: ["PostgreSQL (Supabase, pgvector)", "MySQL", "SQLite"]
+  },
+  {
+    category: "Tools",
+    items: ["Git/GitHub", "Figma", "Cloudflare Pages/R2", "Electron", "Tauri/Rust", "JavaFX", "Excel"]
+  },
+  {
+    category: "AI",
+    items: ["Gemini API integration", "RAG", "Prompt engineering", "OCR"]
   }
 ];
 
@@ -224,9 +258,7 @@ function renderProjects(filter = "All") {
       </div>
       <h3 class="case-title">${escapeHtml(p.title)}</h3>
       <p class="case-desc">${escapeHtml(p.shortDesc)}</p>
-      <ul class="case-stack">
-        ${p.tags.map(t => `<li class="tag-chip">${escapeHtml(t)}</li>`).join("")}
-      </ul>
+      ${p.tags?.length ? `<ul class="case-stack">${p.tags.map(t => `<li class="tag-chip">${escapeHtml(t)}</li>`).join("")}</ul>` : ""}
       <div class="case-actions">
         <button class="btn-inspect" data-id="${p.id}">
           <span>Inspect Architecture</span>
@@ -262,26 +294,12 @@ function openModal(id) {
   prevActiveEl = document.activeElement;
 
   $("#modalTitle").textContent = p.title;
-  $("#modalBody").innerHTML = `
-    <div class="modal-block">
-      <div class="modal-block-label">Role & Engineering Scope</div>
-      <p><strong>${escapeHtml(p.role)}</strong></p>
-    </div>
-    <div class="modal-block">
-      <div class="modal-block-label">Problem Being Solved</div>
-      <p>${escapeHtml(p.problem)}</p>
-    </div>
-    <div class="modal-block">
-      <div class="modal-block-label">My Technical Contributions</div>
-      <p>${escapeHtml(p.myWork)}</p>
-    </div>
-    <div class="modal-block">
-      <div class="modal-block-label">Key Engineered Features</div>
-      <ul class="modal-feature-list">
-        ${p.features.map(f => `<li>${escapeHtml(f)}</li>`).join("")}
-      </ul>
-    </div>
-  `;
+  $("#modalBody").innerHTML = [
+    p.role && `<div class="modal-block"><div class="modal-block-label">Role & Engineering Scope</div><p><strong>${escapeHtml(p.role)}</strong></p></div>`,
+    p.problem && `<div class="modal-block"><div class="modal-block-label">Problem Being Solved</div><p>${escapeHtml(p.problem)}</p></div>`,
+    p.myWork && `<div class="modal-block"><div class="modal-block-label">My Technical Contributions</div><p>${escapeHtml(p.myWork)}</p></div>`,
+    p.features?.length && `<div class="modal-block"><div class="modal-block-label">Key Engineered Features</div><ul class="modal-feature-list">${p.features.map(f => `<li>${escapeHtml(f)}</li>`).join("")}</ul></div>`
+  ].filter(Boolean).join("");
 
   let footerHtml = `<button class="btn-outline" id="modalCloseAction">Close</button>`;
   if (p.github) footerHtml += `<a href="${p.github}" target="_blank" rel="noopener noreferrer" class="btn-accent">GitHub Repo</a>`;
