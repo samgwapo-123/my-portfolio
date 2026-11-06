@@ -224,6 +224,67 @@ navLinks.addEventListener("click", (e) => {
   }
 });
 
+// Keep the single active underline in sync with the section nearest the sticky header.
+const sectionNavLinks = [...navLinks.querySelectorAll('.nav-link[href^="#"]')];
+const navigableSections = sectionNavLinks
+  .map(link => document.getElementById(link.getAttribute("href").slice(1)))
+  .filter(Boolean);
+let navUpdatePending = false;
+
+function updateActiveNavigation() {
+  if (navUpdatePending) return;
+  navUpdatePending = true;
+  requestAnimationFrame(() => {
+    navUpdatePending = false;
+    const headerOffset = ($(".site-header")?.offsetHeight || 0) + 24;
+    let currentSection = navigableSections[0];
+    for (const section of navigableSections) {
+      if (section.getBoundingClientRect().top <= headerOffset) currentSection = section;
+      else break;
+    }
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+      currentSection = navigableSections[navigableSections.length - 1];
+    }
+    sectionNavLinks.forEach(link => {
+      const active = link.getAttribute("href") === `#${currentSection?.id}`;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+  });
+}
+
+window.addEventListener("scroll", updateActiveNavigation, { passive: true });
+window.addEventListener("resize", updateActiveNavigation, { passive: true });
+window.addEventListener("hashchange", updateActiveNavigation);
+updateActiveNavigation();
+
+// Reveal each editorial block once as it enters the viewport; leave content static
+// for reduced-motion users and browsers without IntersectionObserver.
+let revealObserver = null;
+function observeScrollReveals(elements) {
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -32px 0px" });
+  }
+  elements.forEach(element => {
+    if (element.dataset.revealObserved) return;
+    element.dataset.revealObserved = "true";
+    element.classList.add("reveal-on-scroll");
+    revealObserver.observe(element);
+  });
+}
+
+observeScrollReveals(document.querySelectorAll(
+  ".hero-content, .docked-feature-banner, .section-heading-wrap, .academic-item, .skill-block, .timeline-card, .cred-box, .contact-details, .contact-form-card"
+));
+
 // SKILLS RENDERING
 $("#skillsContainer").innerHTML = SKILLS_DATA.map(group => `
   <div class="skill-block">
@@ -271,6 +332,7 @@ function renderProjects(filter = "All") {
       </div>
     </article>
   `).join("");
+  observeScrollReveals($("#projectsGrid").querySelectorAll(".case-card"));
 }
 
 renderFilters("All");
