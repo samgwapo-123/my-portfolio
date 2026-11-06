@@ -18,7 +18,7 @@
       try {
         const saved = localStorage.getItem('theme-preference');
         const prefDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.setAttribute('data-theme', saved || (prefDark ? 'dark' : 'dark'));
+        document.documentElement.setAttribute('data-theme', saved || (prefDark ? 'dark' : 'light'));
       } catch (e) {}
     })();
   </script>
@@ -83,17 +83,16 @@
           <div class="hero-content">
             <div class="hero-kicker">
               <span class="hero-kicker-dashes">------</span>
-              <span>WELCOME TO MY SPACE</span>
+            <span>Full-stack developer · Cebu, Philippines</span>
             </div>
 
             <h1 class="hero-headline">
-              A Full-Stack<br>
-              <span class="highlight">Developer</span>
-              With High Skills
+              I build software
+              <span class="highlight">for real life.</span>
             </h1>
 
             <p class="hero-lead">
-              BS Computer Science student at Cebu Institute of Technology – University. Dedicated to engineering civic technology, offline-first Progressive Web Apps, and resilient real-world software.
+              BS Computer Science student at Cebu Institute of Technology – University, building civic technology, offline-first Progressive Web Apps, and software shaped by real community needs.
             </p>
 
             <div class="hero-cta-group">
@@ -114,7 +113,7 @@
           <div class="banner-block">
             <div class="quote-pre">PROFESSIONAL ETHOS</div>
             <div class="quote-text">
-              "I build software that serves real communities with zero fluff."
+              "If you don't know where the wind is favorable, then you don't know what port you are sailing to."
             </div>
           </div>
 
@@ -144,7 +143,7 @@
       <div class="container">
         <div class="section-heading-wrap">
           <div>
-            <div style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;">02 // Case Studies</div>
+            <div class="section-kicker">02 / Case Studies</div>
             <h2 class="section-title-large">Featured Builds</h2>
           </div>
           <div class="filter-pills" id="filterPills" role="group" aria-label="Filter projects"></div>
@@ -181,7 +180,7 @@
       <div class="container">
         <div class="section-heading-wrap">
           <div>
-            <div style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;">03 // Tooling</div>
+            <div class="section-kicker">03 / Tooling</div>
             <h2 class="section-title-large">Technical Stack</h2>
           </div>
         </div>
@@ -195,7 +194,7 @@
       <div class="container">
         <div class="section-heading-wrap">
           <div>
-            <div style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;">04 // Trajectory</div>
+            <div class="section-kicker">04 / Trajectory</div>
             <h2 class="section-title-large">Experience & Credentials</h2>
           </div>
         </div>
@@ -271,14 +270,14 @@
       <div class="container">
         <div class="section-heading-wrap">
           <div>
-            <div style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;">05 // Direct Outreach</div>
+            <div class="section-kicker">05 / Direct outreach</div>
             <h2 class="section-title-large">Let's Connect</h2>
           </div>
         </div>
 
         <div class="contact-layout">
           <div>
-            <p style="color:var(--text-muted); font-size:1.05rem; line-height:1.6; margin-bottom:2.5rem;">
+            <p>
               Currently seeking an <strong>IT Internship</strong> and junior engineering opportunities. Open to full-stack, mobile, or civic-tech initiatives.
             </p>
 
@@ -326,7 +325,7 @@
                 <textarea id="messageInput" name="message" class="form-control" rows="4" placeholder="Detail your project or internship inquiry..." minlength="10" required></textarea>
               </div>
 
-              <button type="submit" class="btn-accent" id="submitFormBtn" style="width:100%; justify-content:center;">
+              <button type="submit" class="btn-accent" id="submitFormBtn" style="width:100%;">
                 Transmit Message →
               </button>
               <div class="form-alert" id="formAlert" role="alert"></div>

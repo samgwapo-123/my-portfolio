@@ -132,9 +132,20 @@ function showToast(msg) {
 }
 
 function copyToClipboard(text, alertMsg = "Copied to clipboard!") {
-  navigator.clipboard.writeText(text).then(() => showToast(alertMsg)).catch(() => {
-    showToast("Copy failed: " + text);
-  });
+  const fallback = () => {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.appendChild(field);
+    field.select();
+    const copied = document.execCommand("copy");
+    field.remove();
+    showToast(copied ? alertMsg : "Could not copy email. Select it to copy.");
+  };
+  if (!navigator.clipboard?.writeText) return fallback();
+  navigator.clipboard.writeText(text).then(() => showToast(alertMsg)).catch(fallback);
 }
 
 // THEME CONTROLLER
@@ -144,6 +155,8 @@ const moonIcon = $("#moonIcon");
 
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
+  themeBtn.setAttribute("aria-pressed", String(theme === "light"));
+  themeBtn.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
   if (theme === "dark") {
     sunIcon.style.display = "block";
     moonIcon.style.display = "none";
@@ -157,7 +170,7 @@ applyTheme(document.documentElement.getAttribute("data-theme") || "dark");
 
 themeBtn.addEventListener("click", () => {
   const nextTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  localStorage.setItem("theme-preference", nextTheme);
+  try { localStorage.setItem("theme-preference", nextTheme); } catch (e) {}
   applyTheme(nextTheme);
 });
 
@@ -167,11 +180,13 @@ const navLinks = $("#navLinks");
 mobileBtn.addEventListener("click", () => {
   const open = navLinks.classList.toggle("open");
   mobileBtn.setAttribute("aria-expanded", open);
+  mobileBtn.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
 });
 navLinks.addEventListener("click", (e) => {
   if (e.target.tagName === "A") {
     navLinks.classList.remove("open");
     mobileBtn.setAttribute("aria-expanded", "false");
+    mobileBtn.setAttribute("aria-label", "Open navigation menu");
   }
 });
 
@@ -287,6 +302,16 @@ function closeModal() {
   if (prevActiveEl) prevActiveEl.focus();
 }
 
+function keepModalFocus(e) {
+  if (e.key !== "Tab" || !modal.classList.contains("active")) return;
+  const focusable = [...modal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
 $("#projectsGrid").addEventListener("click", (e) => {
   const btn = e.target.closest(".btn-inspect");
   if (btn) openModal(btn.getAttribute("data-id"));
@@ -296,6 +321,13 @@ $("#modalCloseBtn").addEventListener("click", closeModal);
 modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && modal.classList.contains("active")) closeModal();
+  keepModalFocus(e);
+  if (e.key === "Escape" && navLinks.classList.contains("open")) {
+    navLinks.classList.remove("open");
+    mobileBtn.setAttribute("aria-expanded", "false");
+    mobileBtn.setAttribute("aria-label", "Open navigation menu");
+    mobileBtn.focus();
+  }
 });
 
 // CLIPBOARD ACTIONS
@@ -328,6 +360,11 @@ form.addEventListener("submit", async (e) => {
   }
   if (!/^\S+@\S+\.\S+$/.test(email)) {
     alertEl.textContent = "Please enter a valid email address.";
+    alertEl.classList.add("error");
+    return;
+  }
+  if (message.length < 10) {
+    alertEl.textContent = "Please add a little more detail (at least 10 characters).";
     alertEl.classList.add("error");
     return;
   }
